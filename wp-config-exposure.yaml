@@ -1,7 +1,7 @@
 id: exposed-wp-config-files
 info:
   name: Exposed WordPress Configuration Files
-  author: yourname
+  author: AlertDefender
   severity: high
   description: Checks for accessible WordPress configuration files that may contain sensitive information.
   reference: https://example.com/references/exposed-wp-config.html
