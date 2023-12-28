@@ -1,0 +1,37 @@
+id: exposed-wp-config-files
+info:
+  name: Exposed WordPress Configuration Files
+  author: yourname
+  severity: high
+  description: Checks for accessible WordPress configuration files that may contain sensitive information.
+  reference: https://example.com/references/exposed-wp-config.html
+  tags: exposure,config,wp
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/wp-config.php"
+      - "{{BaseURL}}/wp-config.php.old"
+      - "{{BaseURL}}/wp-config.old"
+      - "{{BaseURL}}/wp-config.php.db"
+      - "{{BaseURL}}/wp-config.php.backup"
+      - "{{BaseURL}}/wp-config.php.bkp"
+      - "{{BaseURL}}/wp-config.php.7zip"
+      - "{{BaseURL}}/wp-config.php.gzip"
+      - "{{BaseURL}}/wp-config.php.gz2"
+      - "{{BaseURL}}/wp-config.php.tar"
+      - "{{BaseURL}}/wp-config.php.rar"
+      - "{{BaseURL}}/wp-config.php.zip"
+
+    matchers-condition: or
+    matchers:
+      - type: status
+        status:
+          - 200 # Normal OK response indicating file exists
+          - 403 # Forbidden which indicates the presence of the file but protected by server config
+
+      - type: word
+        words:
+          - "DB_NAME"
+          - "DB_USER"
+          - "DB_PASSWORD"
