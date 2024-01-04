@@ -1,0 +1,21 @@
+id: bash-history-disclosure
+
+info:
+  name: .bash_history Disclosure
+  author: your_name
+  severity: high
+  description: Checks for accessible .bash_history file which may contain sensitive information.
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/.bash_history"
+
+    matchers:
+      - type: word
+        words:
+          - "history -rw-"
+          - "exit"
+          - "ssh "
+        condition: or
+        part: body
